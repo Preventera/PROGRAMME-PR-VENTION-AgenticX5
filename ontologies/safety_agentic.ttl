@@ -1,0 +1,300 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix sa: <http://safety-agentic.preventera.ai/ontology#> .
+@prefix edg: <http://edgy.preventera.ai/ontology#> .
+
+# ============================================================
+# ONTOLOGIE SAFETY AGENTIC - Agents IA pour SST
+# ============================================================
+
+sa: a owl:Ontology ;
+    dcterms:title "Safety Agentic Ontology"@en ;
+    dcterms:title "Ontologie SafetyAgentic"@fr ;
+    dcterms:description "Ontologie pour les agents autonomes de sécurité et prévention HSE"@fr ;
+    dcterms:creator "GenAISafety - Mario Deshaies" ;
+    dcterms:created "2025-12-23"^^xsd:date ;
+    owl:versionInfo "2.0.0" ;
+    owl:imports edg: .
+
+
+# ============================================================
+# CLASSES AGENTS (5 NIVEAUX AGENTICX5)
+# ============================================================
+
+sa:Agent a owl:Class ;
+    rdfs:label "Agent"@en, "Agent"@fr ;
+    rdfs:comment "Agent autonome de sécurité capable d'exécuter des tâches HSE"@fr ;
+    skos:definition "Entité logicielle autonome spécialisée dans la prévention SST"@fr .
+
+sa:PerceptionAgent a owl:Class ;
+    rdfs:subClassOf sa:Agent ;
+    rdfs:label "Perception Agent"@en, "Agent de Perception"@fr ;
+    rdfs:comment "Niveau 1 - Collecte de données (capteurs, vision, documents)"@fr .
+
+sa:AnalysisAgent a owl:Class ;
+    rdfs:subClassOf sa:Agent ;
+    rdfs:label "Analysis Agent"@en, "Agent d'Analyse"@fr ;
+    rdfs:comment "Niveaux 2-3 - Normalisation et analyse des risques"@fr .
+
+sa:DecisionAgent a owl:Class ;
+    rdfs:subClassOf sa:Agent ;
+    rdfs:label "Decision Agent"@en, "Agent de Décision"@fr ;
+    rdfs:comment "Niveau 4 - Recommandations et alertes"@fr .
+
+sa:ActionAgent a owl:Class ;
+    rdfs:subClassOf sa:Agent ;
+    rdfs:label "Action Agent"@en, "Agent d'Action"@fr ;
+    rdfs:comment "Niveau 4 - Exécution d'actions de prévention"@fr .
+
+sa:OrchestratorAgent a owl:Class ;
+    rdfs:subClassOf sa:Agent ;
+    rdfs:label "Orchestrator Agent"@en, "Agent Orchestrateur"@fr ;
+    rdfs:comment "Niveau 5 - Coordination multi-agents et workflows"@fr .
+
+
+# ============================================================
+# CLASSES TÂCHES
+# ============================================================
+
+sa:Task a owl:Class ;
+    rdfs:label "Task"@en, "Tâche"@fr ;
+    rdfs:comment "Tâche exécutée par un agent pour accomplir un objectif HSE"@fr .
+
+sa:PerceptionTask a owl:Class ;
+    rdfs:subClassOf sa:Task ;
+    rdfs:label "Perception Task"@en, "Tâche de Perception"@fr ;
+    rdfs:comment "Collecte de données terrain"@fr .
+
+sa:AnalysisTask a owl:Class ;
+    rdfs:subClassOf sa:Task ;
+    rdfs:label "Analysis Task"@en, "Tâche d'Analyse"@fr ;
+    rdfs:comment "Analyse et évaluation des risques"@fr .
+
+sa:DecisionTask a owl:Class ;
+    rdfs:subClassOf sa:Task ;
+    rdfs:label "Decision Task"@en, "Tâche de Décision"@fr ;
+    rdfs:comment "Génération de recommandations"@fr .
+
+sa:ActionTask a owl:Class ;
+    rdfs:subClassOf sa:Task ;
+    rdfs:label "Action Task"@en, "Tâche d'Action"@fr ;
+    rdfs:comment "Exécution d'actions préventives"@fr .
+
+
+# ============================================================
+# CLASSES ÉVÉNEMENTS DE RISQUE
+# ============================================================
+
+sa:RiskEvent a owl:Class ;
+    rdfs:label "Risk Event"@en, "Événement de Risque"@fr ;
+    rdfs:comment "Événement lié à la sécurité (near-miss, incident, accident)"@fr .
+
+sa:NearMiss a owl:Class ;
+    rdfs:subClassOf sa:RiskEvent ;
+    rdfs:label "Near Miss"@en, "Quasi-accident"@fr ;
+    rdfs:comment "Événement sans conséquence mais à potentiel de danger"@fr .
+
+sa:Incident a owl:Class ;
+    rdfs:subClassOf sa:RiskEvent ;
+    rdfs:label "Incident"@en, "Incident"@fr ;
+    rdfs:comment "Événement avec conséquences mineures"@fr .
+
+sa:Accident a owl:Class ;
+    rdfs:subClassOf sa:RiskEvent ;
+    rdfs:label "Accident"@en, "Accident"@fr ;
+    rdfs:comment "Événement avec blessures ou dommages significatifs"@fr .
+
+
+# ============================================================
+# CLASSES MESURES D'ATTÉNUATION
+# ============================================================
+
+sa:Mitigation a owl:Class ;
+    rdfs:label "Mitigation"@en, "Atténuation"@fr ;
+    rdfs:comment "Mesure de contrôle pour réduire un risque"@fr .
+
+sa:PreventiveMitigation a owl:Class ;
+    rdfs:subClassOf sa:Mitigation ;
+    rdfs:label "Preventive Mitigation"@en, "Atténuation Préventive"@fr ;
+    rdfs:comment "Mesure proactive pour prévenir l'occurrence d'un risque"@fr .
+
+sa:CorrectiveMitigation a owl:Class ;
+    rdfs:subClassOf sa:Mitigation ;
+    rdfs:label "Corrective Mitigation"@en, "Atténuation Corrective"@fr ;
+    rdfs:comment "Mesure réactive pour corriger une situation dangereuse"@fr .
+
+
+# ============================================================
+# CLASSES AUXILIAIRES
+# ============================================================
+
+sa:AgentCapability a owl:Class ;
+    rdfs:label "Agent Capability"@en, "Capacité d'Agent"@fr ;
+    rdfs:comment "Capacité ou compétence spécifique d'un agent"@fr .
+
+sa:Observation a owl:Class ;
+    rdfs:label "Observation"@en, "Observation"@fr ;
+    rdfs:comment "Donnée observée par un agent de perception"@fr .
+
+sa:AutonomyLevel a owl:Class ;
+    rdfs:label "Autonomy Level"@en, "Niveau d'Autonomie"@fr ;
+    rdfs:comment "Niveau d'autonomie de l'agent (1-5)"@fr .
+
+
+# ============================================================
+# INSTANCES NIVEAUX D'AUTONOMIE
+# ============================================================
+
+sa:Level1_Assisted a sa:AutonomyLevel ;
+    rdfs:label "Niveau 1 - Assisté"@fr ;
+    rdfs:comment "Agent assisté, supervision humaine constante"@fr .
+
+sa:Level2_Supervised a sa:AutonomyLevel ;
+    rdfs:label "Niveau 2 - Supervisé"@fr ;
+    rdfs:comment "Agent supervisé, validation humaine requise"@fr .
+
+sa:Level3_Autonomous a sa:AutonomyLevel ;
+    rdfs:label "Niveau 3 - Autonome"@fr ;
+    rdfs:comment "Agent autonome avec escalade sur seuil"@fr .
+
+sa:Level4_HighAutonomy a sa:AutonomyLevel ;
+    rdfs:label "Niveau 4 - Haute Autonomie"@fr ;
+    rdfs:comment "Agent haute autonomie, approbation pour actions critiques"@fr .
+
+sa:Level5_FullAutonomy a sa:AutonomyLevel ;
+    rdfs:label "Niveau 5 - Autonomie Complète"@fr ;
+    rdfs:comment "Agent orchestrateur, override humain disponible"@fr .
+
+
+# ============================================================
+# PROPRIÉTÉS OBJECTALES (RELATIONS)
+# ============================================================
+
+sa:executesTask a owl:ObjectProperty ;
+    rdfs:label "executes task"@en, "exécute tâche"@fr ;
+    rdfs:domain sa:Agent ;
+    rdfs:range sa:Task .
+
+sa:hasCapability a owl:ObjectProperty ;
+    rdfs:label "has capability"@en, "a capacité"@fr ;
+    rdfs:domain sa:Agent ;
+    rdfs:range sa:AgentCapability .
+
+sa:hasSupervisor a owl:ObjectProperty ;
+    rdfs:label "has supervisor"@en, "a superviseur"@fr ;
+    rdfs:comment "CHARTE Art.2: Tout agent doit avoir un superviseur humain"@fr ;
+    rdfs:domain sa:Agent ;
+    rdfs:range edg:Person .
+
+sa:hasAutonomyLevel a owl:ObjectProperty ;
+    rdfs:label "has autonomy level"@en, "a niveau autonomie"@fr ;
+    rdfs:domain sa:Agent ;
+    rdfs:range sa:AutonomyLevel .
+
+sa:orchestrates a owl:ObjectProperty ;
+    rdfs:label "orchestrates"@en, "orchestre"@fr ;
+    rdfs:domain sa:OrchestratorAgent ;
+    rdfs:range sa:Agent .
+
+sa:collaboratesWith a owl:ObjectProperty ;
+    rdfs:label "collaborates with"@en, "collabore avec"@fr ;
+    rdfs:domain sa:Agent ;
+    rdfs:range sa:Agent ;
+    rdf:type owl:SymmetricProperty .
+
+sa:detectsRisk a owl:ObjectProperty ;
+    rdfs:label "detects risk"@en, "détecte risque"@fr ;
+    rdfs:domain sa:Task ;
+    rdfs:range sa:RiskEvent .
+
+sa:monitors a owl:ObjectProperty ;
+    rdfs:label "monitors"@en, "surveille"@fr ;
+    rdfs:domain sa:Agent ;
+    rdfs:range edg:RiskArea .
+
+sa:triggeredBy a owl:ObjectProperty ;
+    rdfs:label "triggered by"@en, "déclenché par"@fr ;
+    rdfs:domain sa:RiskEvent ;
+    rdfs:range sa:Observation .
+
+sa:mitigatedBy a owl:ObjectProperty ;
+    rdfs:label "mitigated by"@en, "atténué par"@fr ;
+    rdfs:domain sa:RiskEvent ;
+    rdfs:range sa:Mitigation .
+
+sa:requiresInput a owl:ObjectProperty ;
+    rdfs:label "requires input"@en, "requiert entrée"@fr ;
+    rdfs:domain sa:Task ;
+    rdfs:range edg:DataFlow .
+
+sa:producesOutput a owl:ObjectProperty ;
+    rdfs:label "produces output"@en, "produit sortie"@fr ;
+    rdfs:domain sa:Task ;
+    rdfs:range edg:DataFlow .
+
+sa:occursIn a owl:ObjectProperty ;
+    rdfs:label "occurs in"@en, "survient dans"@fr ;
+    rdfs:domain sa:RiskEvent ;
+    rdfs:range edg:RiskArea .
+
+sa:involves a owl:ObjectProperty ;
+    rdfs:label "involves"@en, "implique"@fr ;
+    rdfs:domain sa:RiskEvent ;
+    rdfs:range edg:Person .
+
+
+# ============================================================
+# PROPRIÉTÉS DE DONNÉES
+# ============================================================
+
+sa:hasStatus a owl:DatatypeProperty ;
+    rdfs:label "has status"@en, "a statut"@fr ;
+    rdfs:comment "Statut: pending, running, completed, failed"@fr ;
+    rdfs:range xsd:string .
+
+sa:hasPriority a owl:DatatypeProperty ;
+    rdfs:label "has priority"@en, "a priorité"@fr ;
+    rdfs:range xsd:integer .
+
+sa:hasSeverity a owl:DatatypeProperty ;
+    rdfs:label "has severity"@en, "a sévérité"@fr ;
+    rdfs:comment "Sévérité: low, medium, high, critical"@fr ;
+    rdfs:domain sa:RiskEvent ;
+    rdfs:range xsd:string .
+
+sa:detectedAt a owl:DatatypeProperty ;
+    rdfs:label "detected at"@en, "détecté à"@fr ;
+    rdfs:domain sa:RiskEvent ;
+    rdfs:range xsd:dateTime .
+
+sa:confidence a owl:DatatypeProperty ;
+    rdfs:label "confidence"@en, "confiance"@fr ;
+    rdfs:comment "Score de confiance 0.0 à 1.0"@fr ;
+    rdfs:range xsd:float .
+
+sa:hasEffectiveness a owl:DatatypeProperty ;
+    rdfs:label "has effectiveness"@en, "a efficacité"@fr ;
+    rdfs:comment "Efficacité de la mesure 0.0 à 1.0"@fr ;
+    rdfs:domain sa:Mitigation ;
+    rdfs:range xsd:float .
+
+sa:implementedAt a owl:DatatypeProperty ;
+    rdfs:label "implemented at"@en, "implémenté à"@fr ;
+    rdfs:domain sa:Mitigation ;
+    rdfs:range xsd:dateTime .
+
+sa:escalationThreshold a owl:DatatypeProperty ;
+    rdfs:label "escalation threshold"@en, "seuil escalade"@fr ;
+    rdfs:comment "Seuil de risque pour escalade humaine"@fr ;
+    rdfs:domain sa:Agent ;
+    rdfs:range xsd:float .
+
+
+# ============================================================
+# FIN DE L'ONTOLOGIE SAFETY AGENTIC
+# ============================================================

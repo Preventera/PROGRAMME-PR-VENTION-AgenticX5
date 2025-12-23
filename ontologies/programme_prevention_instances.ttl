@@ -1,0 +1,446 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix edg: <http://edgy.preventera.ai/ontology#> .
+@prefix sa: <http://safety-agentic.preventera.ai/ontology#> .
+@prefix ex: <http://exemple.preventera.ai/programme-prevention#> .
+
+# ============================================================
+# INSTANCES PROGRAMME PRÉVENTION SST - AgenticX5
+# ============================================================
+
+
+# ============================================================
+# ORGANISATION
+# ============================================================
+
+ex:EntrepriseXYZ a edg:Organization ;
+    edg:hasName "Entreprise XYZ Inc." ;
+    edg:hasDescription "PME manufacturière - 150 employés" ;
+    edg:legalBasis "LSST, LMRSST, RMPPCC" ;
+    edg:createdDate "2025-01-15T00:00:00"^^xsd:dateTime .
+
+
+# ============================================================
+# LES 8 RÔLES SST
+# ============================================================
+
+ex:Role_Employeur a edg:Role ;
+    edg:hasName "Employeur" ;
+    edg:hasDescription "Responsable ultime de la SST dans l'établissement" ;
+    edg:legalBasis "LSST art. 51" .
+
+ex:Role_Travailleur a edg:Role ;
+    edg:hasName "Travailleur" ;
+    edg:hasDescription "Exécutant des tâches avec obligations SST" ;
+    edg:legalBasis "LSST art. 49" .
+
+ex:Role_Superviseur a edg:Role ;
+    edg:hasName "Superviseur" ;
+    edg:hasDescription "Responsable direct de l'application SST sur le terrain" ;
+    edg:legalBasis "LSST art. 51 (délégation)" .
+
+ex:Role_CoSS a edg:Role ;
+    edg:hasName "Coordonnateur SST" ;
+    edg:hasDescription "Expert SST responsable du programme de prévention" ;
+    edg:legalBasis "LMRSST, RMPPCC" .
+
+ex:Role_RepresentantPrevention a edg:Role ;
+    edg:hasName "Représentant à la prévention" ;
+    edg:hasDescription "Représentant des travailleurs pour la prévention" ;
+    edg:legalBasis "LSST art. 87-91" .
+
+ex:Role_MembreComiteSST a edg:Role ;
+    edg:hasName "Membre Comité SST" ;
+    edg:hasDescription "Membre du comité paritaire de santé et sécurité" ;
+    edg:legalBasis "LSST art. 68-86" .
+
+ex:Role_Secouriste a edg:Role ;
+    edg:hasName "Secouriste" ;
+    edg:hasDescription "Intervenant de premiers soins certifié" ;
+    edg:legalBasis "Règlement sur les normes minimales de premiers secours" .
+
+ex:Role_InspecteurCNESST a edg:Role ;
+    edg:hasName "Inspecteur CNESST" ;
+    edg:hasDescription "Inspecteur officiel de la CNESST" ;
+    edg:legalBasis "LSST art. 177-193" .
+
+
+# ============================================================
+# LES 6 ÉQUIPES
+# ============================================================
+
+ex:Team_Direction a edg:Team ;
+    edg:hasName "Direction" ;
+    edg:hasDescription "Équipe de direction générale" ;
+    edg:belongsTo ex:EntrepriseXYZ .
+
+ex:Team_Production a edg:Team ;
+    edg:hasName "Production" ;
+    edg:hasDescription "Équipe des opérations de production" ;
+    edg:belongsTo ex:EntrepriseXYZ .
+
+ex:Team_SST a edg:Team ;
+    edg:hasName "Équipe SST" ;
+    edg:hasDescription "Équipe dédiée à la santé-sécurité" ;
+    edg:belongsTo ex:EntrepriseXYZ .
+
+ex:Team_ComiteSST a edg:Team ;
+    edg:hasName "Comité SST" ;
+    edg:hasDescription "Comité paritaire de santé et sécurité" ;
+    edg:belongsTo ex:EntrepriseXYZ ;
+    edg:legalBasis "LSST art. 68" .
+
+ex:Team_Maintenance a edg:Team ;
+    edg:hasName "Maintenance" ;
+    edg:hasDescription "Équipe de maintenance industrielle" ;
+    edg:belongsTo ex:EntrepriseXYZ .
+
+ex:Team_Urgence a edg:Team ;
+    edg:hasName "Équipe d'urgence" ;
+    edg:hasDescription "Brigade de premiers secours" ;
+    edg:belongsTo ex:EntrepriseXYZ .
+
+
+# ============================================================
+# LES 8 ACTEURS SST (PERSONNES)
+# ============================================================
+
+ex:Employeur_001 a edg:Person ;
+    edg:hasName "Jean Directeur" ;
+    edg:hasDescription "Président-directeur général" ;
+    edg:hasRole ex:Role_Employeur ;
+    edg:belongsTo ex:Team_Direction ;
+    edg:email "jean.directeur@entreprisexyz.com" .
+
+ex:Travailleur_001 a edg:Person ;
+    edg:hasName "Marie Ouvrière" ;
+    edg:hasDescription "Opératrice de machine - Département Production" ;
+    edg:hasRole ex:Role_Travailleur ;
+    edg:belongsTo ex:Team_Production ;
+    edg:exposedTo ex:Zone_Usinage .
+
+ex:Travailleur_002 a edg:Person ;
+    edg:hasName "Paul Assembleur" ;
+    edg:hasDescription "Assembleur - Département Production" ;
+    edg:hasRole ex:Role_Travailleur ;
+    edg:belongsTo ex:Team_Production ;
+    edg:exposedTo ex:Zone_Assemblage .
+
+ex:Superviseur_001 a edg:Person ;
+    edg:hasName "Pierre Contremaître" ;
+    edg:hasDescription "Superviseur de production" ;
+    edg:hasRole ex:Role_Superviseur ;
+    edg:belongsTo ex:Team_Production ;
+    edg:supervises ex:Travailleur_001, ex:Travailleur_002 .
+
+ex:CoSS_001 a edg:Person ;
+    edg:hasName "Sophie Préventionniste" ;
+    edg:hasDescription "Coordonnatrice en santé et sécurité du travail" ;
+    edg:hasRole ex:Role_CoSS ;
+    edg:belongsTo ex:Team_SST ;
+    edg:email "sophie.preventionniste@entreprisexyz.com" .
+
+ex:RP_001 a edg:Person ;
+    edg:hasName "Luc Représentant" ;
+    edg:hasDescription "Représentant à la prévention - Élu par les travailleurs" ;
+    edg:hasRole ex:Role_RepresentantPrevention ;
+    edg:belongsTo ex:Team_ComiteSST .
+
+ex:Secouriste_001 a edg:Person ;
+    edg:hasName "Marc Secouriste" ;
+    edg:hasDescription "Secouriste en milieu de travail certifié" ;
+    edg:hasRole ex:Role_Secouriste ;
+    edg:belongsTo ex:Team_Urgence .
+
+ex:Inspecteur_CNESST_001 a edg:Person ;
+    edg:hasName "Carole Inspectrice" ;
+    edg:hasDescription "Inspectrice CNESST - Région Capitale-Nationale" ;
+    edg:hasRole ex:Role_InspecteurCNESST .
+
+
+# ============================================================
+# RELATIONS DE SUPERVISION
+# ============================================================
+
+ex:Employeur_001 edg:supervises ex:CoSS_001 .
+ex:Employeur_001 edg:supervises ex:Superviseur_001 .
+ex:Superviseur_001 edg:supervises ex:Travailleur_001 .
+ex:Superviseur_001 edg:supervises ex:Travailleur_002 .
+ex:Superviseur_001 edg:supervises ex:Secouriste_001 .
+
+
+# ============================================================
+# LES 5 ZONES DE RISQUE
+# ============================================================
+
+ex:Zone_Usinage a edg:RiskArea ;
+    edg:hasName "Zone Usinage" ;
+    edg:hasDescription "Aire de machines-outils (tours, fraiseuses)" ;
+    edg:hasRiskLevel "high" .
+
+ex:Zone_Soudure a edg:RiskArea ;
+    edg:hasName "Zone Soudure" ;
+    edg:hasDescription "Aire de soudage et assemblage métallique" ;
+    edg:hasRiskLevel "critical" .
+
+ex:Zone_Assemblage a edg:RiskArea ;
+    edg:hasName "Zone Assemblage" ;
+    edg:hasDescription "Aire d'assemblage manuel et automatisé" ;
+    edg:hasRiskLevel "medium" .
+
+ex:Zone_Entrepot a edg:RiskArea ;
+    edg:hasName "Zone Entrepôt" ;
+    edg:hasDescription "Stockage et logistique" ;
+    edg:hasRiskLevel "medium" .
+
+ex:Zone_Administrative a edg:RiskArea ;
+    edg:hasName "Zone Administrative" ;
+    edg:hasDescription "Bureaux et salles de réunion" ;
+    edg:hasRiskLevel "low" .
+
+
+# ============================================================
+# LES 9 PROCESSUS DU PROGRAMME DE PRÉVENTION
+# ============================================================
+
+ex:Process_P1_ElaborationProgramme a edg:Process ;
+    edg:hasName "P1 - Élaboration du programme de prévention" ;
+    edg:hasDescription "Création et mise à jour du programme de prévention" ;
+    edg:legalBasis "LSST art. 58, 59" ;
+    edg:owner ex:CoSS_001 ;
+    edg:frequency "P1Y" .
+
+ex:Process_P2_IdentificationRisques a edg:Process ;
+    edg:hasName "P2 - Identification des risques" ;
+    edg:hasDescription "Identification systématique des dangers et risques SST" ;
+    edg:owner ex:CoSS_001 ;
+    edg:frequency "P1M" .
+
+ex:Process_P3_EvaluationRisques a edg:Process ;
+    edg:hasName "P3 - Évaluation et priorisation des risques" ;
+    edg:hasDescription "Évaluation probabilité × gravité et priorisation" ;
+    edg:owner ex:CoSS_001 ;
+    edg:frequency "P1M" .
+
+ex:Process_P4_MiseEnPlaceControles a edg:Process ;
+    edg:hasName "P4 - Mise en place des mesures de contrôle" ;
+    edg:hasDescription "Implémentation des mesures de prévention" ;
+    edg:owner ex:Superviseur_001 .
+
+ex:Process_P5_FormationInformation a edg:Process ;
+    edg:hasName "P5 - Formation et information SST" ;
+    edg:hasDescription "Formation continue et sensibilisation du personnel" ;
+    edg:owner ex:CoSS_001 .
+
+ex:Process_P6_InspectionAudit a edg:Process ;
+    edg:hasName "P6 - Inspection et audit SST" ;
+    edg:hasDescription "Inspections régulières et audits de conformité" ;
+    edg:owner ex:CoSS_001 ;
+    edg:frequency "P1W" .
+
+ex:Process_P7_GestionIncidents a edg:Process ;
+    edg:hasName "P7 - Gestion des incidents et accidents" ;
+    edg:hasDescription "Déclaration, enquête et suivi des incidents" ;
+    edg:legalBasis "LATMP" ;
+    edg:owner ex:CoSS_001 .
+
+ex:Process_P8_SurveillanceMedicale a edg:Process ;
+    edg:hasName "P8 - Surveillance médicale" ;
+    edg:hasDescription "Suivi santé des travailleurs exposés" ;
+    edg:legalBasis "LSST art. 53" ;
+    edg:owner ex:CoSS_001 ;
+    edg:frequency "P1Y" .
+
+ex:Process_P9_RevueDirection a edg:Process ;
+    edg:hasName "P9 - Revue de direction SST" ;
+    edg:hasDescription "Revue périodique du SGSST par la direction" ;
+    edg:owner ex:Employeur_001 ;
+    edg:frequency "P3M" .
+
+
+# ============================================================
+# LES 13 AGENTS IA (AGENTICX5)
+# ============================================================
+
+# --- NIVEAU 1: PERCEPTION ---
+
+ex:Agent_IoTCollector a sa:PerceptionAgent ;
+    edg:hasName "IoT Collector Agent" ;
+    edg:hasDescription "Collecte données capteurs IoT (bruit, température, gaz)" ;
+    sa:hasAutonomyLevel sa:Level1_Assisted ;
+    sa:hasSupervisor ex:CoSS_001 ;
+    sa:monitors ex:Zone_Usinage, ex:Zone_Soudure .
+
+ex:Agent_VisionSafety a sa:PerceptionAgent ;
+    edg:hasName "Vision Safety Agent" ;
+    edg:hasDescription "Analyse vidéo pour détection EPI et comportements" ;
+    sa:hasAutonomyLevel sa:Level1_Assisted ;
+    sa:hasSupervisor ex:CoSS_001 ;
+    sa:monitors ex:Zone_Usinage, ex:Zone_Assemblage .
+
+ex:Agent_DocumentScanner a sa:PerceptionAgent ;
+    edg:hasName "Document Scanner Agent" ;
+    edg:hasDescription "OCR et extraction données documents SST" ;
+    sa:hasAutonomyLevel sa:Level1_Assisted ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+# --- NIVEAU 2: NORMALISATION ---
+
+ex:Agent_DataValidator a sa:AnalysisAgent ;
+    edg:hasName "Data Validator Agent" ;
+    edg:hasDescription "Validation et normalisation des données collectées" ;
+    sa:hasAutonomyLevel sa:Level2_Supervised ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+ex:Agent_Harmonizer a sa:AnalysisAgent ;
+    edg:hasName "Harmonizer Agent" ;
+    edg:hasDescription "Harmonisation multi-sources et enrichissement sémantique" ;
+    sa:hasAutonomyLevel sa:Level2_Supervised ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+# --- NIVEAU 3: ANALYSE ---
+
+ex:Agent_RiskAnalyzer a sa:AnalysisAgent ;
+    edg:hasName "Risk Analyzer Agent" ;
+    edg:hasDescription "Analyse prédictive des risques SST" ;
+    sa:hasAutonomyLevel sa:Level3_Autonomous ;
+    sa:hasSupervisor ex:CoSS_001 ;
+    sa:escalationThreshold "0.85"^^xsd:float ;
+    sa:confidence "0.947"^^xsd:float .
+
+ex:Agent_ComplianceChecker a sa:AnalysisAgent ;
+    edg:hasName "Compliance Checker Agent" ;
+    edg:hasDescription "Vérification conformité CNESST/ISO 45001" ;
+    sa:hasAutonomyLevel sa:Level3_Autonomous ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+ex:Agent_IncidentCorrelator a sa:AnalysisAgent ;
+    edg:hasName "Incident Correlator Agent" ;
+    edg:hasDescription "Corrélation incidents et identification causes profondes" ;
+    sa:hasAutonomyLevel sa:Level3_Autonomous ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+# --- NIVEAU 4: RECOMMANDATION ---
+
+ex:Agent_ActionRecommender a sa:DecisionAgent ;
+    edg:hasName "Action Recommender Agent" ;
+    edg:hasDescription "Génère recommandations d'actions préventives/correctives" ;
+    sa:hasAutonomyLevel sa:Level4_HighAutonomy ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+ex:Agent_AlertManager a sa:DecisionAgent ;
+    edg:hasName "Alert Manager Agent" ;
+    edg:hasDescription "Gestion des alertes et notifications SST" ;
+    sa:hasAutonomyLevel sa:Level4_HighAutonomy ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+ex:Agent_ReportGenerator a sa:DecisionAgent ;
+    edg:hasName "Report Generator Agent" ;
+    edg:hasDescription "Génération automatique rapports SST" ;
+    sa:hasAutonomyLevel sa:Level4_HighAutonomy ;
+    sa:hasSupervisor ex:CoSS_001 .
+
+# --- NIVEAU 5: ORCHESTRATION ---
+
+ex:Agent_Orchestrator a sa:OrchestratorAgent ;
+    edg:hasName "Safety Orchestrator Agent" ;
+    edg:hasDescription "Orchestration multi-agents et coordination workflows" ;
+    sa:hasAutonomyLevel sa:Level5_FullAutonomy ;
+    sa:hasSupervisor ex:CoSS_001 ;
+    sa:orchestrates ex:Agent_IoTCollector, ex:Agent_VisionSafety,
+                    ex:Agent_RiskAnalyzer, ex:Agent_AlertManager .
+
+
+# ============================================================
+# FLUX DE DONNÉES
+# ============================================================
+
+ex:DataFlow_RawSensorData a edg:DataFlow ;
+    edg:hasName "Données capteurs brutes" ;
+    edg:hasDescription "Flux temps réel des capteurs IoT" .
+
+ex:DataFlow_ValidatedData a edg:DataFlow ;
+    edg:hasName "Données validées" ;
+    edg:hasDescription "Données après validation SHACL" .
+
+ex:DataFlow_RiskPrediction a edg:DataFlow ;
+    edg:hasName "Prédictions de risque" ;
+    edg:hasDescription "Scores de risque prédictifs par zone/activité" .
+
+ex:DataFlow_Recommendations a edg:DataFlow ;
+    edg:hasName "Recommandations d'action" ;
+    edg:hasDescription "Actions préventives/correctives recommandées" .
+
+ex:DataFlow_Alerts a edg:DataFlow ;
+    edg:hasName "Alertes SST" ;
+    edg:hasDescription "Notifications et alertes de sécurité" .
+
+ex:DataFlow_Reports a edg:DataFlow ;
+    edg:hasName "Rapports SST" ;
+    edg:hasDescription "Rapports automatisés" .
+
+
+# ============================================================
+# EXEMPLES D'ÉVÉNEMENTS DE RISQUE
+# ============================================================
+
+ex:RiskEvent_NearMiss_001 a sa:NearMiss ;
+    edg:hasName "Quasi-accident - Chute outillage" ;
+    edg:hasDescription "Outil tombé de hauteur, aucune blessure" ;
+    sa:hasSeverity "medium" ;
+    sa:detectedAt "2025-12-20T14:30:00"^^xsd:dateTime ;
+    sa:occursIn ex:Zone_Assemblage ;
+    sa:involves ex:Travailleur_001 .
+
+ex:RiskEvent_Incident_001 a sa:Incident ;
+    edg:hasName "Incident - Exposition bruit excessif" ;
+    edg:hasDescription "Niveau sonore >90dB pendant 2 heures sans protection" ;
+    sa:hasSeverity "high" ;
+    sa:detectedAt "2025-12-21T09:15:00"^^xsd:dateTime ;
+    sa:occursIn ex:Zone_Usinage .
+
+
+# ============================================================
+# EXEMPLES DE MESURES D'ATTÉNUATION
+# ============================================================
+
+ex:Mitigation_ProtectionAuditive a sa:PreventiveMitigation ;
+    edg:hasName "Programme de protection auditive" ;
+    edg:hasDescription "Bouchons et coquilles obligatoires zone usinage" ;
+    sa:hasEffectiveness "0.92"^^xsd:float ;
+    sa:implementedAt "2025-01-15T00:00:00"^^xsd:dateTime .
+
+ex:Mitigation_FormationTMS a sa:PreventiveMitigation ;
+    edg:hasName "Formation prévention TMS" ;
+    edg:hasDescription "Formation ergonomie et manutention sécuritaire" ;
+    sa:hasEffectiveness "0.78"^^xsd:float .
+
+ex:Mitigation_GantsAnticoupure a sa:CorrectiveMitigation ;
+    edg:hasName "Port gants anti-coupure obligatoire" ;
+    edg:hasDescription "EPI niveau 5 pour manipulation pièces coupantes" ;
+    sa:hasEffectiveness "0.95"^^xsd:float ;
+    sa:implementedAt "2025-12-22T14:00:00"^^xsd:dateTime .
+
+
+# ============================================================
+# CANAUX DE COMMUNICATION
+# ============================================================
+
+ex:Channel_SMS a edg:Channel ;
+    edg:hasName "SMS" ;
+    edg:hasDescription "Alertes par message texte" .
+
+ex:Channel_Email a edg:Channel ;
+    edg:hasName "Email" ;
+    edg:hasDescription "Notifications par courriel" .
+
+ex:Channel_Dashboard a edg:Channel ;
+    edg:hasName "Dashboard" ;
+    edg:hasDescription "Tableau de bord temps réel" .
+
+
+# ============================================================
+# FIN DES INSTANCES
+# ============================================================

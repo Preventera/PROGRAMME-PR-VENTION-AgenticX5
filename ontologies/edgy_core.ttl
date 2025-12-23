@@ -1,0 +1,236 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix edg: <http://edgy.preventera.ai/ontology#> .
+
+# ============================================================
+# ONTOLOGIE EDGY CORE - Programme Prévention AgenticX5
+# ============================================================
+
+edg: a owl:Ontology ;
+    dcterms:title "EDGY Core Ontology"@en ;
+    dcterms:title "Ontologie EDGY Core"@fr ;
+    dcterms:description "Ontologie pour cartographier les organisations SST selon le framework EDGY"@fr ;
+    dcterms:creator "GenAISafety - Mario Deshaies" ;
+    dcterms:created "2025-12-23"^^xsd:date ;
+    owl:versionInfo "2.0.0" .
+
+
+# ============================================================
+# CLASSES PRINCIPALES
+# ============================================================
+
+edg:Entity a owl:Class ;
+    rdfs:label "Entité EDGY"@fr, "EDGY Entity"@en ;
+    rdfs:comment "Classe de base pour toutes les entités organisationnelles"@fr ;
+    rdfs:subClassOf owl:Thing .
+
+edg:Person a owl:Class ;
+    rdfs:label "Personne"@fr, "Person"@en ;
+    rdfs:comment "Individu dans l'organisation (acteur SST)"@fr ;
+    rdfs:subClassOf edg:Entity .
+
+edg:Team a owl:Class ;
+    rdfs:label "Équipe"@fr, "Team"@en ;
+    rdfs:comment "Groupe de personnes collaborant"@fr ;
+    rdfs:subClassOf edg:Entity .
+
+edg:Role a owl:Class ;
+    rdfs:label "Rôle"@fr, "Role"@en ;
+    rdfs:comment "Fonction ou responsabilité organisationnelle SST"@fr ;
+    rdfs:subClassOf edg:Entity .
+
+edg:Organization a owl:Class ;
+    rdfs:label "Organisation"@fr, "Organization"@en ;
+    rdfs:comment "Structure organisationnelle (entreprise, établissement)"@fr ;
+    rdfs:subClassOf edg:Entity .
+
+edg:Process a owl:Class ;
+    rdfs:label "Processus"@fr, "Process"@en ;
+    rdfs:comment "Processus organisationnel ou métier SST"@fr ;
+    rdfs:subClassOf owl:Thing .
+
+edg:Task a owl:Class ;
+    rdfs:label "Tâche"@fr, "Task"@en ;
+    rdfs:comment "Tâche spécifique dans un processus"@fr ;
+    rdfs:subClassOf edg:Process .
+
+edg:RiskArea a owl:Class ;
+    rdfs:label "Zone de Risque"@fr, "Risk Area"@en ;
+    rdfs:comment "Zone ou situation identifiée avec risques SST"@fr ;
+    rdfs:subClassOf owl:Thing .
+
+edg:DataFlow a owl:Class ;
+    rdfs:label "Flux de Données"@fr, "Data Flow"@en ;
+    rdfs:comment "Flux d'information entre entités ou processus"@fr ;
+    rdfs:subClassOf owl:Thing .
+
+edg:Capability a owl:Class ;
+    rdfs:label "Capacité"@fr, "Capability"@en ;
+    rdfs:comment "Compétence ou capacité organisationnelle"@fr ;
+    rdfs:subClassOf owl:Thing .
+
+edg:Channel a owl:Class ;
+    rdfs:label "Canal"@fr, "Channel"@en ;
+    rdfs:comment "Canal de communication ou d'interaction"@fr ;
+    rdfs:subClassOf owl:Thing .
+
+edg:Asset a owl:Class ;
+    rdfs:label "Actif"@fr, "Asset"@en ;
+    rdfs:comment "Actif organisationnel (équipement, système)"@fr ;
+    rdfs:subClassOf owl:Thing .
+
+
+# ============================================================
+# PROPRIÉTÉS OBJECTALES (RELATIONS)
+# ============================================================
+
+edg:supervises a owl:ObjectProperty ;
+    rdfs:label "supervise"@fr, "supervises"@en ;
+    rdfs:comment "Relation de supervision entre entités"@fr ;
+    rdfs:domain edg:Entity ;
+    rdfs:range edg:Entity .
+
+edg:belongsTo a owl:ObjectProperty ;
+    rdfs:label "appartient à"@fr, "belongs to"@en ;
+    rdfs:comment "Indique l'appartenance à une équipe ou organisation"@fr ;
+    rdfs:domain edg:Entity ;
+    rdfs:range edg:Entity .
+
+edg:hasRole a owl:ObjectProperty ;
+    rdfs:label "a le rôle"@fr, "has role"@en ;
+    rdfs:comment "Associe une personne à un rôle SST"@fr ;
+    rdfs:domain edg:Person ;
+    rdfs:range edg:Role .
+
+edg:executesProcess a owl:ObjectProperty ;
+    rdfs:label "exécute le processus"@fr, "executes process"@en ;
+    rdfs:comment "Indique qu'une entité exécute un processus"@fr ;
+    rdfs:domain edg:Entity ;
+    rdfs:range edg:Process .
+
+edg:hasInput a owl:ObjectProperty ;
+    rdfs:label "a comme entrée"@fr, "has input"@en ;
+    rdfs:comment "Flux de données en entrée d'un processus"@fr ;
+    rdfs:domain edg:Process ;
+    rdfs:range edg:DataFlow .
+
+edg:hasOutput a owl:ObjectProperty ;
+    rdfs:label "a comme sortie"@fr, "has output"@en ;
+    rdfs:comment "Flux de données en sortie d'un processus"@fr ;
+    rdfs:domain edg:Process ;
+    rdfs:range edg:DataFlow .
+
+edg:exposedTo a owl:ObjectProperty ;
+    rdfs:label "exposé à"@fr, "exposed to"@en ;
+    rdfs:comment "Indique qu'une entité est exposée à un risque"@fr ;
+    rdfs:domain edg:Entity ;
+    rdfs:range edg:RiskArea .
+
+edg:mitigates a owl:ObjectProperty ;
+    rdfs:label "atténue"@fr, "mitigates"@en ;
+    rdfs:comment "Processus ou contrôle qui atténue un risque"@fr ;
+    rdfs:domain edg:Process ;
+    rdfs:range edg:RiskArea .
+
+edg:hasCapability a owl:ObjectProperty ;
+    rdfs:label "a la capacité"@fr, "has capability"@en ;
+    rdfs:comment "Associe une entité à une compétence"@fr ;
+    rdfs:domain edg:Entity ;
+    rdfs:range edg:Capability .
+
+edg:usesChannel a owl:ObjectProperty ;
+    rdfs:label "utilise le canal"@fr, "uses channel"@en ;
+    rdfs:comment "Canal utilisé pour communication"@fr ;
+    rdfs:domain edg:Entity ;
+    rdfs:range edg:Channel .
+
+edg:owner a owl:ObjectProperty ;
+    rdfs:label "responsable"@fr, "owner"@en ;
+    rdfs:comment "Personne responsable d'un processus ou zone"@fr ;
+    rdfs:domain owl:Thing ;
+    rdfs:range edg:Person .
+
+
+# ============================================================
+# PROPRIÉTÉS DE DONNÉES (ATTRIBUTS)
+# ============================================================
+
+edg:hasName a owl:DatatypeProperty ;
+    rdfs:label "a le nom"@fr, "has name"@en ;
+    rdfs:comment "Nom de l'entité"@fr ;
+    rdfs:range xsd:string .
+
+edg:hasDescription a owl:DatatypeProperty ;
+    rdfs:label "a la description"@fr, "has description"@en ;
+    rdfs:comment "Description textuelle"@fr ;
+    rdfs:range xsd:string .
+
+edg:hasRiskLevel a owl:DatatypeProperty ;
+    rdfs:label "a le niveau de risque"@fr, "has risk level"@en ;
+    rdfs:comment "Niveau de risque: low, medium, high, critical"@fr ;
+    rdfs:domain edg:RiskArea ;
+    rdfs:range xsd:string .
+
+edg:legalBasis a owl:DatatypeProperty ;
+    rdfs:label "base légale"@fr, "legal basis"@en ;
+    rdfs:comment "Référence légale (LSST, CNESST, ISO)"@fr ;
+    rdfs:range xsd:string .
+
+edg:createdDate a owl:DatatypeProperty ;
+    rdfs:label "date de création"@fr, "created date"@en ;
+    rdfs:range xsd:dateTime .
+
+edg:email a owl:DatatypeProperty ;
+    rdfs:label "courriel"@fr, "email"@en ;
+    rdfs:domain edg:Person ;
+    rdfs:range xsd:string .
+
+edg:phone a owl:DatatypeProperty ;
+    rdfs:label "téléphone"@fr, "phone"@en ;
+    rdfs:domain edg:Person ;
+    rdfs:range xsd:string .
+
+edg:frequency a owl:DatatypeProperty ;
+    rdfs:label "fréquence"@fr, "frequency"@en ;
+    rdfs:comment "Fréquence d'exécution (ISO 8601 duration)"@fr ;
+    rdfs:domain edg:Process ;
+    rdfs:range xsd:string .
+
+
+# ============================================================
+# CONTRAINTES OWL (CARDINALITÉS)
+# ============================================================
+
+edg:Person rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty edg:hasName ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+edg:Role rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty edg:hasName ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+edg:RiskArea rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty edg:hasRiskLevel ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+] .
+
+edg:Process rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty edg:owner ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+
+# ============================================================
+# FIN DE L'ONTOLOGIE EDGY CORE
+# ============================================================
